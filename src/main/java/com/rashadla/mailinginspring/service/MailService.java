@@ -24,8 +24,8 @@ public class MailService {
     // and is a scheduled task that sends emails.
     @Scheduled(fixedRate = 600000)
     public void mailSender() throws MessagingException {
-        String sendTo = "recipient-email@example.com";
-        String sendFrom = "your-email@example.com";
+        String sendTo = "reshadla@hotmail.com";
+        String sendFrom = "reshadla@hotmail.com";
         String emailSubject = "Email from mailSender()";
         String bodyText = "Spring Boot Email test from mailSender()!";
 
