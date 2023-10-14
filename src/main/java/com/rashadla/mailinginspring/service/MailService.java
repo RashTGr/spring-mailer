@@ -6,14 +6,13 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 
 @Service
 @Slf4j
@@ -21,18 +20,34 @@ import java.io.File;
 public class MailService {
     private final JavaMailSender javaMailSender;
 
-//    @Scheduled(fixedRate = 600000)
-//    public void mailSender() throws MessagingException {
-//        String to = "reshadla@hotmail.com";
-//        String subject = "Spring email test";
-//        String body = "Spring Boot Email test!";
-//
-//        sendEmail(to, subject, body);
-//
-//        String subjectAtt = "This is simple text message method!";
-////        sendEmailWithAttachment(subjectAtt);
-//        log.info("Email sent successfully!");
-//    }
+    @Scheduled(fixedRate = 600000)
+    public void mailSender() throws MessagingException {
+        String sendTo = "reshadla@hotmail.com";
+        String sendFrom = "reshadla@hotmail.com";
+        String emailSubject = "Email from mailSender()";
+        String bodyText = "Spring Boot Email test from mailSender()!";
+
+        // Set properties for RequestDetails object for simple email
+        RequestDetails details = RequestDetails.builder()
+                .to(sendTo)
+                .from(sendFrom)
+                .subject(emailSubject)
+                .body(bodyText)
+                .build();
+        sendEmail(details); // Call Simple text email method
+
+
+        // Set properties for RequestDetails object for email with attachment
+        RequestDetails detailsWithAtt = RequestDetails.builder()
+                .to(sendTo)
+                .from(sendFrom)
+                .subject(emailSubject)
+                .body(bodyText)
+                .build();
+        sendEmailWithAttachment(detailsWithAtt); // Call email with attachment
+
+        log.info("Email sent successfully!");
+    }
 
     public void sendEmail(RequestDetails details) {
         SimpleMailMessage msg = new SimpleMailMessage();
