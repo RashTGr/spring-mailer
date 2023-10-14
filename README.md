@@ -1,5 +1,5 @@
 # Email Service with Spring Boot
-This is a simple email service developed using Spring Boot. It enables users to send emails with or without attachments.
+This is a simple email service developed using Spring Boot. It enables users to send emails with or without attachments and is configured to work with the **Brevo** email service.
 
 
 ## Features
