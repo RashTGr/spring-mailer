@@ -17,7 +17,7 @@ This is a simple email service developed using Spring Boot. It enables users to 
 - Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/email-service.git
+   git clone https://github.com/RashTGr/spring-mailer.git
 
 
 ## Usage
