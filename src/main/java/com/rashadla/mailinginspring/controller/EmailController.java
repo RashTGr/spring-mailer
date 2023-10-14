@@ -1,6 +1,6 @@
 package com.rashadla.mailinginspring.controller;
 
-import com.rashadla.mailinginspring.dto.EmailRequest;
+import com.rashadla.mailinginspring.dto.RequestDetails;
 import com.rashadla.mailinginspring.service.MailService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +15,15 @@ public class EmailController {
 
     // Send simple text email
     @PostMapping("/send")
-    public String sendEmail(@RequestBody EmailRequest requestDto) {
-        mailService.sendEmail(requestDto.getTo(), requestDto.getSubject(), requestDto.getBody());
+    public String sendEmail(@RequestBody RequestDetails details) {
+        mailService.sendEmail(details);
         return "Email sent successfully!";
     }
 
     // Send email with attachment (static)
     @PostMapping("/send-att")
-    public String sendEmailAtt(@RequestBody EmailRequest requestDto) throws MessagingException {
-        mailService.sendEmailWithAttachment(requestDto.getTo(), requestDto.getSubject(), requestDto.getBody());
+    public String sendEmailAtt(@RequestBody RequestDetails details) throws MessagingException {
+        mailService.sendEmailWithAttachment(details);
         return "Email with attachment sent successfully!";
     }
 }

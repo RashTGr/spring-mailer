@@ -1,5 +1,6 @@
 package com.rashadla.mailinginspring.service;
 
+import com.rashadla.mailinginspring.dto.RequestDetails;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -33,36 +34,25 @@ public class MailService {
 //        log.info("Email sent successfully!");
 //    }
 
-    public void sendEmail(String to, String subject, String body) {
+    public void sendEmail(RequestDetails details) {
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(to);
-        msg.setFrom("reshadla@hotmail.com");
-        msg.setSubject(subject);
-        msg.setText(body);
+        msg.setTo(details.getTo());
+        msg.setFrom(details.getFrom());
+        msg.setSubject(details.getSubject());
+        msg.setText(details.getBody());
         javaMailSender.send(msg);
         log.info("Email sent!");
     }
 
-    public void sendEmailWithAttachment(String to, String subject, String body) throws MessagingException {
+    public void sendEmailWithAttachment(RequestDetails details) throws MessagingException {
         MimeMessage msg = javaMailSender.createMimeMessage();
-
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
-        helper.setTo(to);
-        helper.setFrom("reshadla@hotmail.com");
-        helper.setSubject(subject);
-        helper.setText(body);
 
-//        helper.setText("<h3>Check attachment for image!</h3>", true);
-
-//        default = text/plain
-//
-//        true = text/html
-//        FileSystemResource file = new FileSystemResource(new File("classpath:android.png"));
-
-//        InputStream input = resource.getInputStream();
-//        ResourceUtils.getFile("classpath:android.png");
-
-        FileSystemResource file = new FileSystemResource(new File())
+        // Setting up details
+        helper.setTo(details.getTo());
+        helper.setFrom(details.getFrom());
+        helper.setSubject(details.getSubject());
+        helper.setText(details.getBody());
 
         Resource resource = new ClassPathResource("java logo.png");
         helper.addAttachment("photo.png", resource);
