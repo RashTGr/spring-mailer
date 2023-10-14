@@ -51,6 +51,7 @@ public class MailService {
         log.info("Email sent successfully!");
     }
 
+    // To send simple text emails
     public void sendEmail(RequestDetails details) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(details.getTo());
@@ -61,6 +62,7 @@ public class MailService {
         log.info("Email sent!");
     }
 
+    // To send emails with attachment (static, using a hardcoded approach)
     public void sendEmailWithAttachment(RequestDetails details) throws MessagingException {
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
