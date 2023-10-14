@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 public class MailService {
     private final JavaMailSender javaMailSender;
 
+    // Driver method for other methods to send emails,
+    // and is a scheduled task that sends emails.
     @Scheduled(fixedRate = 600000)
     public void mailSender() throws MessagingException {
         String sendTo = "reshadla@hotmail.com";
