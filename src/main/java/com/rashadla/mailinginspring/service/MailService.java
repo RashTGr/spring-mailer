@@ -20,9 +20,11 @@ import org.springframework.stereotype.Service;
 public class MailService {
     private final JavaMailSender javaMailSender;
 
-    // Driver method for other methods to send emails,
-    // and is a scheduled task that sends emails.
-    @Scheduled(fixedRate = 600000)
+    /*
+    * Driver method for other methods to send emails, and
+    * is a scheduled task that sends emails with delays.
+    * */
+    @Scheduled(fixedDelay = 5000, initialDelay = 15000)
     public void mailSender() throws MessagingException {
         String sendTo = "reshadla@hotmail.com";
         String sendFrom = "reshadla@hotmail.com";
@@ -38,8 +40,44 @@ public class MailService {
                 .build();
         sendEmail(details); // Call Simple text email method
 
+        sendEmailWithAttachment(details); // Call email with attachment
 
-        // Set properties for RequestDetails object for email with attachment
+        log.info("Email sent successfully!");
+    }
+
+
+    /*
+    * This method is set to run once on a predetermined time.
+    * */
+    @Scheduled(cron = "17 39 15 * * ?")
+    public void simpleEmailScheduler() {
+        String sendTo = "reshadla@hotmail.com";
+        String sendFrom = "reshadla@hotmail.com";
+        String emailSubject = "Scheduled email @15:39:17()";
+        String bodyText = "Spring Boot Email test from mailSender()!";
+
+        RequestDetails details = RequestDetails.builder()
+                .to(sendTo)
+                .from(sendFrom)
+                .subject(emailSubject)
+                .body(bodyText)
+                .build();
+        sendEmail(details); // Call Simple text email method
+
+        log.info("Email sent successfully!");
+    }
+
+    /*
+    * This method is scheduled to be run on every Mon from 16:00
+    * to 17:00 at every 20 seconds.
+    * */
+    @Scheduled(cron = "0/20 * 16 * * MON")
+    public void attachmentEmailScheduler() throws MessagingException {
+        String sendTo = "reshadla@hotmail.com";
+        String sendFrom = "reshadla@hotmail.com";
+        String emailSubject = "Scheduled email at every 20 sec.";
+        String bodyText = "This email with attachment is set to be sent every 20 sec at 16:00 on Mon!";
+
         RequestDetails detailsWithAtt = RequestDetails.builder()
                 .to(sendTo)
                 .from(sendFrom)
@@ -48,10 +86,11 @@ public class MailService {
                 .build();
         sendEmailWithAttachment(detailsWithAtt); // Call email with attachment
 
-        log.info("Email sent successfully!");
+        log.info("Attachment email sent successfully!");
     }
 
-    // To send simple text emails
+
+    // Method for sending simple text emails
     public void sendEmail(RequestDetails details) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(details.getTo());
@@ -62,7 +101,7 @@ public class MailService {
         log.info("Email sent!");
     }
 
-    // To send emails with attachment (static, using a hardcoded approach)
+    // Method for sending emails with attachment (static, using a hardcoded approach)
     public void sendEmailWithAttachment(RequestDetails details) throws MessagingException {
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
