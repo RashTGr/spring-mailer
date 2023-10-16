@@ -26,8 +26,8 @@ public class MailService {
     * */
     @Scheduled(fixedDelay = 5000, initialDelay = 15000)
     public void mailSender() throws MessagingException {
-        String sendTo = "reshadla@hotmail.com";
-        String sendFrom = "reshadla@hotmail.com";
+        String sendTo = "recipient@example.com";
+        String sendFrom = "sender@example.com";
         String emailSubject = "Email from mailSender()";
         String bodyText = "Spring Boot Email test from mailSender()!";
 
@@ -51,8 +51,8 @@ public class MailService {
     * */
     @Scheduled(cron = "17 39 15 * * ?")
     public void simpleEmailScheduler() {
-        String sendTo = "reshadla@hotmail.com";
-        String sendFrom = "reshadla@hotmail.com";
+        String sendTo = "recipient@example.com";
+        String sendFrom = "sender@example.com";
         String emailSubject = "Scheduled email @15:39:17()";
         String bodyText = "Spring Boot Email test from mailSender()!";
 
@@ -73,8 +73,8 @@ public class MailService {
     * */
     @Scheduled(cron = "0/20 * 16 * * MON")
     public void attachmentEmailScheduler() throws MessagingException {
-        String sendTo = "reshadla@hotmail.com";
-        String sendFrom = "reshadla@hotmail.com";
+        String sendTo = "recipient@example.com";
+        String sendFrom = "sender@example.com";
         String emailSubject = "Scheduled email at every 20 sec.";
         String bodyText = "This email with attachment is set to be sent every 20 sec at 16:00 on Mon!";
 
